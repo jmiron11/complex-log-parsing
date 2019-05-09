@@ -31,3 +31,18 @@ It isn't until we parse the following line that we know which block this cmpctbl
 2019-05-07 18:33:26 Initialized PartiallyDownloadedBlock for block 000000000000000f5e823146a2b516c60fd7ae22153ee7fca2b298e7ee445573 using a cmpctblock of size 144192
 ```
 
+## I want to parse logs, what would make that easier?
+* I want to be able to match a log line to a set of log line parsers.
+* I want log line parsers to support correlation between lines.
+    1. Upon parsing a log line, a parser may have "correlated data". 
+    2. Correlated data has relates log lines positionally (before or after).
+* I want the interface for defining log parsing for a log to be simple.
+* Lets parse the logs in a single pass over the log lines.
+
+## Implementation
+
+The implementation requires defining a few key parts:
+* User-definable log line parser (Log line as input -> Dictionary of data as output).
+* User-definable log line matcher (Log line as input -> Log line parsers as output).
+* Log line parser configuration / user interface.
+* Parser that implements generic user-defined matchers and parsers .
